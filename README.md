@@ -1,2 +1,2 @@
 # gtneoe
-credit chatgpt
+#credit chatgpt
