@@ -1,69 +1,344 @@
-<!DOCTYPE html>
+<!DO<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hello World</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello, World — Diego</title>
+  <meta name="description" content="A playful, hyper‑modular Hello World with nested boxes, easy edit slots, and gorgeous motion." />
   <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ========================
+       THEME & DESIGN TOKENS
+       ======================== */
+    :root {
+      /* Brand palette – tweak freely */
+      --bg-0: #0b1020;      /* page backdrop */
+      --bg-1: #0f172a;      /* outer frame */
+      --bg-2: #111827;      /* panels */
+      --bg-3: #0b1220;      /* inner panels */
+      --card: #0a0f1c;      /* cards */
+      --ink-1: #e6f6ff;     /* main text */
+      --ink-2: #94a3b8;     /* secondary text */
+      --accent-1: #22d3ee;  /* cyan */
+      --accent-2: #a78bfa;  /* purple */
+      --accent-3: #34d399;  /* green */
+      --ring: #60a5fa;      /* focus ring */
+      --radius-1: 16px;
+      --radius-2: 22px;
+      --shadow-1: 0 10px 30px rgba(0,0,0,.35);
+      --shadow-2: 0 30px 60px rgba(0,0,0,.45);
+      --maxw: 1100px;
     }
 
+    /* Light mode (auto via user preference) */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-0: #e7f8fe;
+        --bg-1: #ffffff;
+        --bg-2: #f3f6ff;
+        --bg-3: #eaf0ff;
+        --card: #ffffff;
+        --ink-1: #0b1220;
+        --ink-2: #475569;
+        --accent-1: #0ea5e9;
+        --accent-2: #7c3aed;
+        --accent-3: #059669;
+        --ring: #2563eb;
+      }
+    }
+
+    /* Manual theme override support */
+    html[data-theme="light"] {
+      --bg-0: #e7f8fe; --bg-1:#fff; --bg-2:#f3f6ff; --bg-3:#eaf0ff; --card:#fff;
+      --ink-1:#0b1220; --ink-2:#475569; --accent-1:#0ea5e9; --accent-2:#7c3aed; --accent-3:#059669; --ring:#2563eb;
+    }
+    html[data-theme="dark"] {
+      --bg-0:#0b1020; --bg-1:#0f172a; --bg-2:#111827; --bg-3:#0b1220; --card:#0a0f1c;
+      --ink-1:#e6f6ff; --ink-2:#94a3b8; --accent-1:#22d3ee; --accent-2:#a78bfa; --accent-3:#34d399; --ring:#60a5fa;
+    }
+
+    /* ===============
+       GLOBAL LAYOUT
+       =============== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      overflow: hidden;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      color: var(--ink-1);
+      font: 500 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, "Helvetica Neue", sans-serif;
+      background: radial-gradient(1200px 600px at 15% 10%, rgba(34,211,238,.16), transparent 60%),
+                  radial-gradient(1000px 500px at 90% 20%, rgba(167,139,250,.17), transparent 60%),
+                  linear-gradient(180deg, var(--bg-0), var(--bg-0));
+      letter-spacing: .2px;
     }
 
-    h1 {
-      font-size: 4rem;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      text-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff;
-      animation: glow 2s infinite alternate, float 6s ease-in-out infinite;
+    a { color: var(--accent-1); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
+
+    /* Centered stage */
+    .stage {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 40px 18px;
     }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 5px #00f0ff, 0 0 10px #00f0ff, 0 0 20px #00f0ff;
-      }
-      to {
-        text-shadow: 0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 80px #ff00ff;
-      }
+    /* =================
+       BOXES WITHIN BOXES
+       ================= */
+    .frame {
+      width: min(100%, var(--maxw));
+      border-radius: var(--radius-2);
+      background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+      box-shadow: var(--shadow-2);
+      padding: 18px;
+      position: relative;
+      overflow: clip;
+      border: 1px solid rgba(255,255,255,.06);
+      isolation: isolate;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0); }
-    }
-
-    .stars {
+    /* Subtle animated border glow */
+    .frame::before {
+      content: "";
       position: absolute;
-      width: 2px;
-      height: 2px;
-      background: white;
-      box-shadow: 100px 200px white, 300px 400px white, 600px 100px white, 900px 700px white,
-                  1200px 200px white, 1500px 600px white, 1800px 300px white;
-      animation: twinkle 5s infinite alternate;
+      inset: -2px;
+      z-index: -1;
+      background: conic-gradient(from 0deg, var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+      filter: blur(20px) saturate(120%);
+      opacity: .18;
+      animation: spin 14s linear infinite;
     }
 
-    @keyframes twinkle {
-      from { opacity: 0.2; }
-      to { opacity: 1; }
+    @keyframes spin { to { transform: rotate(1turn); } }
+
+    /* Panel grid */
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .9fr;
+      gap: 18px;
     }
+    @media (max-width: 860px) { .panel-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      border-radius: var(--radius-1);
+      background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
+      padding: 16px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
+    /* Cards inside panels */
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+
+    .card {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      padding: 14px 16px 16px;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.22); }
+
+    /* Inner boxes (one more layer) */
+    .inner {
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px dashed rgba(255,255,255,.15);
+      padding: 12px;
+      margin-top: 10px;
+    }
+
+    /* Cute header bar */
+    .appbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05));
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 14px;
+    }
+    .appbar .title {
+      display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .4px;
+    }
+    .badge {
+      font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 999px; color: #06131a;
+      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    }
+
+    /* Little button set */
+    .buttons { display: flex; gap: 8px; align-items: center; }
+    .btn {
+      appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px;
+      padding: 10px 14px; border-radius: 12px; color: var(--ink-1);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.25); }
+
+    /* Hero hello */
+    .hello {
+      font-size: clamp(28px, 5vw, 54px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: .6px;
+      margin: 0;
+      text-shadow: 0 0 30px rgba(34,211,238,.25), 0 0 60px rgba(167,139,250,.2);
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    .sub { margin: 8px 0 0; color: var(--ink-2); }
+
+    /* Footer */
+    .footer { margin-top: 16px; font-size: 13px; color: var(--ink-2); text-align: center; }
+
+    /* Accent separators */
+    .rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); margin: 10px 0 12px; }
+
+    /* Micro animations */
+    @keyframes ping {
+      0% { transform: scale(1); filter: saturate(120%); }
+      60% { transform: scale(1.012); }
+      100% { transform: scale(1); filter: saturate(100%); }
+    }
+    .pulse { animation: ping 3.2s ease-in-out infinite; }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-  <h1>Hello, World!</h1>
+  <div class="stage">
+    <!-- OUTER FRAME (Box 1) -->
+    <div class="frame" id="app">
+      <!-- TOP APP BAR -->
+      <div class="appbar">
+        <div class="title">
+          <span class="badge">Hello</span>
+          <span>World, but make it modular ✨</span>
+        </div>
+        <div class="buttons">
+          <button class="btn" id="toggleTheme" aria-pressed="false" aria-label="Toggle theme">Toggle Theme</button>
+          <button class="btn" id="randomize" aria-label="Randomize accents">Randomize Accents</button>
+        </div>
+      </div>
+
+      <!-- PANELS GRID (Box 2) -->
+      <div class="panel-grid">
+        <!-- LEFT PANEL (Box 3) -->
+        <section class="panel" aria-labelledby="hero-title">
+          <h1 class="hello" id="hero-title">Hello, World!</h1>
+          <p class="sub">This page is designed with boxes‑within‑boxes so you can tweak layers independently.
+            Try editing the comments marked <strong>EDIT ME</strong> in the HTML to make it your own.
+          </p>
+          <div class="rule" role="presentation"></div>
+
+          <!-- CARDS ROW (Box 4) -->
+          <div class="cards">
+            <!-- CARD A -->
+            <article class="card pulse" aria-labelledby="card-a-title">
+              <h2 id="card-a-title" style="margin:0 0 6px; font-size:18px; font-weight:800;">Editable Slots</h2>
+              <p style="margin:0; color:var(--ink-2)">Swap the <em>content</em> in these cards to add your bio, links, or project notes.</p>
+              <!-- INNER BOX A (Box 5) -->
+              <div class="inner">
+                <!-- EDIT ME: Replace this list with your own highlights -->
+                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
+                  <li>Built with semantic HTML</li>
+                  <li>Nested panels & cards</li>
+                  <li>Theme toggle + accent shuffle</li>
+                </ul>
+              </div>
+            </article>
+
+            <!-- CARD B -->
+            <article class="card" aria-labelledby="card-b-title">
+              <h2 id="card-b-title" style="margin:0 0 6px; font-size:18px; font-weight:800;">Quick Links</h2>
+              <p style="margin:0; color:var(--ink-2)">Use this as a launchpad for your GitHub, LinkedIn, or class sites.</p>
+              <!-- INNER BOX B (Box 6) -->
+              <div class="inner">
+                <!-- EDIT ME: Replace URLs with your own -->
+                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
+                  <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+                  <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+                  <li><a href="#" aria-disabled="true">Your Project 1</a></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- RIGHT PANEL (Box 3b) -->
+        <aside class="panel" aria-labelledby="about-title">
+          <h2 id="about-title" style="margin:0 0 6px; font-size:20px; font-weight:900;">About This Page</h2>
+          <p style="margin:0 0 10px; color:var(--ink-2)">Minimal JS, strong CSS, lots of compartments. Perfect for quick edits.</p>
+
+          <!-- STACK OF SMALL CARDS (Box 4b) -->
+          <div class="cards" style="grid-template-columns:1fr;">
+            <div class="card">
+              <strong>Layering</strong>
+              <div class="inner" style="margin-top:8px;">
+                <!-- EDIT ME: One‑liner explainer -->
+                Each layer is an independent box: <code>.frame → .panel → .card → .inner</code>.
+              </div>
+            </div>
+            <div class="card">
+              <strong>Performance</strong>
+              <div class="inner" style="margin-top:8px;">
+                No libraries. Just HTML/CSS/JS. Accessible focus rings + semantic tags.
+              </div>
+            </div>
+            <div class="card">
+              <strong>Customize Fast</strong>
+              <div class="inner" style="margin-top:8px;">
+                Tune design tokens in <code>:root</code> (colors, radii, shadows) for instant theming.
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- FOOTER (Box 2b) -->
+      <p class="footer">© <span id="year"></span> Diego — Built with ❤️, CSS variables, and nested boxes.</p>
+    </div>
+  </div>
+
+  <script>
+    // Tiny utility helpers
+    const $ = (sel, el = document) => el.querySelector(sel);
+
+    // Live year
+    $('#year').textContent = new Date().getFullYear();
+
+    // Theme Toggle (adds data-theme to <html>)
+    const toggleBtn = $('#toggleTheme');
+    toggleBtn?.addEventListener('click', () => {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : current === 'dark' ? null : 'dark';
+      if (next) html.setAttribute('data-theme', next); else html.removeAttribute('data-theme');
+      toggleBtn.setAttribute('aria-pressed', String(next === 'dark'));
+    });
+
+    // Randomize accent hues – fun "surprise me" button
+    const randBtn = $('#randomize');
+    function hsl(h, s = 90, l = 60) { return `hsl(${h} ${s}% ${l}%)`; }
+    randBtn?.addEventListener('click', () => {
+      const root = document.documentElement;
+      const h1 = Math.floor(Math.random() * 360);
+      const h2 = (h1 + 90) % 360;
+      const h3 = (h1 + 180) % 360;
+      root.style.setProperty('--accent-1', hsl(h1));
+      root.style.setProperty('--accent-2', hsl(h2));
+      root.style.setProperty('--accent-3', hsl(h3, 70, 56));
+      // cute feedback ping on frame
+      $('#app').style.animation = 'ping .6s ease 1';
+      setTimeout(() => $('#app').style.animation = '', 600);
+    });
+  </script>
 </body>
 </html>
