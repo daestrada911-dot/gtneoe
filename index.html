@@ -16,12 +16,15 @@
       --bg-2: #111827;      /* panels */
       --bg-3: #0b1220;      /* inner panels */
       --card: #0a0f1c;      /* cards */
-      --ink-1: #e6f6ff;     /* main text */
+      --ink-1: #0b1220;     /* main text */
       --ink-2: #94a3b8;     /* secondary text */
       --accent-1: #22d3ee;  /* cyan */
       --accent-2: #a78bfa;  /* purple */
       --accent-3: #34d399;  /* green */
       --ring: #60a5fa;      /* focus ring */
+      --btn-bg: linear-gradient(180deg, rgba(255,255,255,.14), rgba(15,23,42,.6));
+      --btn-bg-hover: linear-gradient(180deg, rgba(255,255,255,.24), rgba(15,23,42,.7));
+      --btn-ink: #f8fafc;
       --radius-1: 16px;
       --radius-2: 22px;
       --shadow-1: 0 10px 30px rgba(0,0,0,.35);
@@ -43,6 +46,9 @@
         --accent-2: #7c3aed;
         --accent-3: #059669;
         --ring: #2563eb;
+        --btn-bg: linear-gradient(180deg, rgba(255,255,255,.96), rgba(226,232,240,.82));
+        --btn-bg-hover: linear-gradient(180deg, rgba(255,255,255,1), rgba(203,213,225,.92));
+        --btn-ink: #0b1220;
       }
     }
 
@@ -50,10 +56,16 @@
     html[data-theme="light"] {
       --bg-0: #e7f8fe; --bg-1:#fff; --bg-2:#f3f6ff; --bg-3:#eaf0ff; --card:#fff;
       --ink-1:#0b1220; --ink-2:#475569; --accent-1:#0ea5e9; --accent-2:#7c3aed; --accent-3:#059669; --ring:#2563eb;
+      --btn-bg: linear-gradient(180deg, rgba(255,255,255,.96), rgba(226,232,240,.82));
+      --btn-bg-hover: linear-gradient(180deg, rgba(255,255,255,1), rgba(203,213,225,.92));
+      --btn-ink: #0b1220;
     }
     html[data-theme="dark"] {
       --bg-0:#0b1020; --bg-1:#0f172a; --bg-2:#111827; --bg-3:#0b1220; --card:#0a0f1c;
       --ink-1:#e6f6ff; --ink-2:#94a3b8; --accent-1:#22d3ee; --accent-2:#a78bfa; --accent-3:#34d399; --ring:#60a5fa;
+      --btn-bg: linear-gradient(180deg, rgba(32,41,64,.88), rgba(8,15,35,.92));
+      --btn-bg-hover: linear-gradient(180deg, rgba(55,65,94,.88), rgba(12,20,40,.96));
+      --btn-ink: #f8fafc;
     }
 
     /* ===============
@@ -131,8 +143,8 @@
 
     /* Buttons */
     .buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .btn { appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px; padding: 10px 14px; border-radius: 12px; color: var(--ink-1); background: linear-gradient(180deg, rgba(67, 67, 67, 0.375)), rgba(247, 247, 247, 0.02)); border: 1px solid rgba(255,255,255,.12); transition: transform .15s ease, background .2s ease, border-color .2s ease; }
-    .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.25); }
+    .btn { appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px; padding: 10px 14px; border-radius: 12px; color: var(--btn-ink); background: var(--btn-bg); border: 1px solid rgba(255,255,255,.2); transition: transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease; }
+    .btn:hover { transform: translateY(-1px); background: var(--btn-bg-hover); border-color: rgba(255,255,255,.32); }
     .btn[aria-pressed="true"] { outline: 3px solid var(--accent-2); }
 
     /* Hero hello */
@@ -149,7 +161,7 @@
     /* Modal */
     .modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 50; }
     .modal[open]{ display: grid; }
-    .modal-card { background: var(--card); border:1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-2); max-width: 92vw; }
+    .modal-card { background: var(--card); border:1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-2); max-width: 92vw; color: var(--ink-1); line-height: 1.7; }
 
     /* Footer */
     .footer { margin-top: 16px; font-size: 13px; color: var(--ink-2); text-align: center; }
@@ -313,7 +325,7 @@ This course is really helping me get in shape with coding and technology. I’m 
   <dialog class="modal" id="ciModal" aria-labelledby="ciTitle">
     <div class="modal-card">
       <h2 id="ciTitle" style="margin:4px 0 10px; font-size:20px; font-weight:900;">CI/CD (Quick Primer)</h2>
-      <div style="max-width:60ch; color:var(--ink-2)">
+      <div style="max-width:60ch; color:inherit">
         <p><strong>CI</strong> (Continuous Integration) automatically checks your code whenever you push (lint/validate/test).
         <strong>CD</strong> (Continuous Delivery/Deployment) automatically ships the latest good build to your site (e.g., GitHub Pages).</p>
         <p>For this class: set up a GitHub Action to <em>validate HTML</em> and then <em>deploy</em> to Pages if it passes. That’s CI → CD.</p>
