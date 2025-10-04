@@ -16,7 +16,7 @@
       --bg-2: #111827;      /* panels */
       --bg-3: #0b1220;      /* inner panels */
       --card: #0a0f1c;      /* cards */
-      --ink-1: #0b1220;     /* main text */
+      --ink-1: #e6f6ff;     /* main text */
       --ink-2: #94a3b8;     /* secondary text */
       --accent-1: #22d3ee;  /* cyan */
       --accent-2: #a78bfa;  /* purple */
@@ -347,16 +347,27 @@ This course is really helping me get in shape with coding and technology. I’m 
     // Persisted Theme Toggle (JS enhancement #1)
     const THEME_KEY = 'theme.pref';
     const html = document.documentElement;
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) html.setAttribute('data-theme', saved);
-
     const toggleBtn = $('#toggleTheme');
+    const toggleLabel = toggleBtn?.textContent?.trim() || 'Toggle Theme';
+    const saved = localStorage.getItem(THEME_KEY);
+    const defaultTheme = saved === 'light' ? 'light' : 'dark';
+
+    function applyTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-pressed', String(theme === 'dark'));
+        toggleBtn.textContent = toggleLabel;
+        toggleBtn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      }
+    }
+
+    applyTheme(defaultTheme);
+
     toggleBtn?.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : current === 'dark' ? '' : 'dark';
-      if (next) html.setAttribute('data-theme', next); else html.removeAttribute('data-theme');
-      localStorage.setItem(THEME_KEY, next || '');
-      toggleBtn.setAttribute('aria-pressed', String(next === 'dark'));
+      const current = html.getAttribute('data-theme') || defaultTheme;
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
     });
 
     // Randomize accent hues – fun "surprise me" button
