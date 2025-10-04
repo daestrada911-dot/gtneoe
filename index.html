@@ -1,10 +1,10 @@
-<!DO<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hello, World — Diego</title>
-  <meta name="description" content="A playful, hyper‑modular Hello World with nested boxes, easy edit slots, and gorgeous motion." />
+  <title>Getting to Know Each Other — Diego</title>
+  <meta name="description" content="A playful, hyper‑modular Hello World / Getting to Know Each Other page with CI/CD-ready structure, nested boxes, and interactive JS." />
   <style>
     /* ========================
        THEME & DESIGN TOKENS
@@ -76,12 +76,7 @@
     :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
 
     /* Centered stage */
-    .stage {
-      min-height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 40px 18px;
-    }
+    .stage { min-height: 100%; display: grid; place-items: center; padding: 40px 18px; }
 
     /* =================
        BOXES WITHIN BOXES
@@ -109,93 +104,52 @@
       opacity: .18;
       animation: spin 14s linear infinite;
     }
-
     @keyframes spin { to { transform: rotate(1turn); } }
 
     /* Panel grid */
-    .panel-grid {
-      display: grid;
-      grid-template-columns: 1.2fr .9fr;
-      gap: 18px;
-    }
+    .panel-grid { display: grid; grid-template-columns: 1.2fr .9fr; gap: 18px; }
     @media (max-width: 860px) { .panel-grid { grid-template-columns: 1fr; } }
 
-    .panel {
-      border-radius: var(--radius-1);
-      background: linear-gradient(180deg, var(--bg-2), var(--bg-3));
-      padding: 16px;
-      box-shadow: var(--shadow-1);
-      border: 1px solid rgba(255,255,255,.06);
-    }
+    .panel { border-radius: var(--radius-1); background: linear-gradient(180deg, var(--bg-2), var(--bg-3)); padding: 16px; box-shadow: var(--shadow-1); border: 1px solid rgba(255,255,255,.06); }
 
     /* Cards inside panels */
     .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
 
     .card {
-      position: relative;
-      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      padding: 14px 16px 16px;
-      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      position: relative; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 14px 16px 16px; transition: transform .25s ease, border-color .25s ease, background .25s ease;
     }
     .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.22); }
 
     /* Inner boxes (one more layer) */
-    .inner {
-      border-radius: 12px;
-      background: var(--card);
-      border: 1px dashed rgba(255,255,255,.15);
-      padding: 12px;
-      margin-top: 10px;
-    }
+    .inner { border-radius: 12px; background: var(--card); border: 1px dashed rgba(255,255,255,.15); padding: 12px; margin-top: 10px; }
 
     /* Cute header bar */
-    .appbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05));
-      border: 1px solid rgba(255,255,255,.08);
-      margin-bottom: 14px;
-    }
-    .appbar .title {
-      display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .4px;
-    }
-    .badge {
-      font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
-      padding: 4px 8px; border-radius: 999px; color: #06131a;
-      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
-    }
+    .appbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-radius: 12px; background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05)); border: 1px solid rgba(255,255,255,.08); margin-bottom: 14px; }
+    .appbar .title { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .4px; }
+    .badge { font-size: 12px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; color: #06131a; background: linear-gradient(180deg, var(--accent-1), var(--accent-2)); }
 
-    /* Little button set */
-    .buttons { display: flex; gap: 8px; align-items: center; }
-    .btn {
-      appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px;
-      padding: 10px 14px; border-radius: 12px; color: var(--ink-1);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.12);
-      transition: transform .15s ease, background .2s ease, border-color .2s ease;
-    }
+    /* Buttons */
+    .buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn { appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px; padding: 10px 14px; border-radius: 12px; color: var(--ink-1); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.12); transition: transform .15s ease, background .2s ease, border-color .2s ease; }
     .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.25); }
+    .btn[aria-pressed="true"] { outline: 3px solid var(--accent-2); }
 
     /* Hero hello */
-    .hello {
-      font-size: clamp(28px, 5vw, 54px);
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: .6px;
-      margin: 0;
-      text-shadow: 0 0 30px rgba(34,211,238,.25), 0 0 60px rgba(167,139,250,.2);
-      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-
+    .hello { font-size: clamp(28px, 5vw, 54px); font-weight: 900; line-height: 1.1; letter-spacing: .6px; margin: 0; text-shadow: 0 0 30px rgba(34,211,238,.25), 0 0 60px rgba(167,139,250,.2); background: linear-gradient(90deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .sub { margin: 8px 0 0; color: var(--ink-2); }
+
+    /* Tabs */
+    .tabs [role="tablist"]{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+    .tabs [role="tab"]{ padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.04); cursor:pointer; }
+    .tabs [role="tab"][aria-selected="true"]{ border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.08); }
+    .tab-panel{ display:none; }
+    .tab-panel[data-active="true"]{ display:block; }
+
+    /* Modal */
+    .modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 50; }
+    .modal[open]{ display: grid; }
+    .modal-card { background: var(--card); border:1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 12px; box-shadow: var(--shadow-2); max-width: 92vw; }
 
     /* Footer */
     .footer { margin-top: 16px; font-size: 13px; color: var(--ink-2); text-align: center; }
@@ -204,108 +158,134 @@
     .rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); margin: 10px 0 12px; }
 
     /* Micro animations */
-    @keyframes ping {
-      0% { transform: scale(1); filter: saturate(120%); }
-      60% { transform: scale(1.012); }
-      100% { transform: scale(1); filter: saturate(100%); }
-    }
+    @keyframes ping { 0% { transform: scale(1); filter: saturate(120%);} 60% { transform: scale(1.012);} 100% { transform: scale(1); filter: saturate(100%);} }
     .pulse { animation: ping 3.2s ease-in-out infinite; }
   </style>
 </head>
 <body>
   <div class="stage">
     <!-- OUTER FRAME (Box 1) -->
-    <div class="frame" id="app">
+    <main class="frame" id="app">
       <!-- TOP APP BAR -->
-      <div class="appbar">
+      <header class="appbar">
         <div class="title">
-          <span class="badge">Hello</span>
-          <span>World, but make it modular ✨</span>
+          <span class="badge">GTKO</span>
+          <span>Getting to Know Each Other — Modular ✨</span>
         </div>
         <div class="buttons">
           <button class="btn" id="toggleTheme" aria-pressed="false" aria-label="Toggle theme">Toggle Theme</button>
           <button class="btn" id="randomize" aria-label="Randomize accents">Randomize Accents</button>
+          <button class="btn" id="openCiModal" aria-label="What is CI/CD?">What is CI/CD?</button>
         </div>
-      </div>
+      </header>
 
       <!-- PANELS GRID (Box 2) -->
       <div class="panel-grid">
         <!-- LEFT PANEL (Box 3) -->
         <section class="panel" aria-labelledby="hero-title">
           <h1 class="hello" id="hero-title">Hello, World!</h1>
-          <p class="sub">This page is designed with boxes‑within‑boxes so you can tweak layers independently.
-            Try editing the comments marked <strong>EDIT ME</strong> in the HTML to make it your own.
+          <p class="sub">This is Diego’s <strong>Getting to Know Each Other</strong> page with boxes‑within‑boxes, ready for CI/CD and validation.
+            Edit the <strong>EDIT ME</strong> spots to make it yours.
           </p>
           <div class="rule" role="presentation"></div>
 
-          <!-- CARDS ROW (Box 4) -->
-          <div class="cards">
-            <!-- CARD A -->
-            <article class="card pulse" aria-labelledby="card-a-title">
-              <h2 id="card-a-title" style="margin:0 0 6px; font-size:18px; font-weight:800;">Editable Slots</h2>
-              <p style="margin:0; color:var(--ink-2)">Swap the <em>content</em> in these cards to add your bio, links, or project notes.</p>
-              <!-- INNER BOX A (Box 5) -->
-              <div class="inner">
-                <!-- EDIT ME: Replace this list with your own highlights -->
-                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
-                  <li>Built with semantic HTML</li>
-                  <li>Nested panels & cards</li>
-                  <li>Theme toggle + accent shuffle</li>
-                </ul>
-              </div>
-            </article>
+          <!-- TABS (HTML enhancement) -->
+          <div class="tabs" id="tabs">
+            <div role="tablist" aria-label="Profile Sections">
+              <button role="tab" aria-selected="true" aria-controls="panel-profile" id="tab-profile">Profile</button>
+              <button role="tab" aria-selected="false" aria-controls="panel-links" id="tab-links">Links</button>
+              <button role="tab" aria-selected="false" aria-controls="panel-fun" id="tab-fun">Fun Facts</button>
+            </div>
 
-            <!-- CARD B -->
-            <article class="card" aria-labelledby="card-b-title">
-              <h2 id="card-b-title" style="margin:0 0 6px; font-size:18px; font-weight:800;">Quick Links</h2>
-              <p style="margin:0; color:var(--ink-2)">Use this as a launchpad for your GitHub, LinkedIn, or class sites.</p>
-              <!-- INNER BOX B (Box 6) -->
-              <div class="inner">
-                <!-- EDIT ME: Replace URLs with your own -->
-                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
-                  <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
-                  <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
-                  <li><a href="#" aria-disabled="true">Your Project 1</a></li>
-                </ul>
-              </div>
-            </article>
+            <section id="panel-profile" class="tab-panel" data-active="true" tabindex="0" aria-labelledby="tab-profile">
+              <article class="card">
+                <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+                  <!-- EDIT ME: Replace with your image -->
+                  <img src="me-300-by-300.jpg" alt="Professional headshot of Diego Estrada in a suit and tie" width="120" height="120" style="border-radius:12px; border:1px solid rgba(255,255,255,.15); cursor: zoom-in; object-fit:cover;" id="avatar"/>
+                  <div>
+                    <h2 style="margin:0 0 6px; font-size:20px; font-weight:900;">Hi, I'm <button class="btn" id="nameBtn" style="padding:2px 8px; border-radius:8px;"> <span id="studentName">Diego Estrada</span> </button></h2>
+                    <p style="margin:0; color:var(--ink-2);">Cybersecurity @ Lewis University • Builder • Restaurant industry hustle • Tech & creative projects</p>
+                  </div>
+                </div>
+                <div class="inner" style="margin-top:10px;">
+                  <!-- EDIT ME: Short bio -->
+                  I love shipping small projects fast. This page is my playground for HTML, CSS, and JavaScript.
+                </div>
+              </article>
+            </section>
+
+            <section id="panel-links" class="tab-panel" tabindex="0" aria-labelledby="tab-links">
+              <article class="card">
+                <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Quick Links</h2>
+                <div class="inner">
+                  <!-- EDIT ME: Replace URLs with your own -->
+                  <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
+                    <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="#" aria-disabled="true">Project 1</a></li>
+                  </ul>
+                </div>
+              </article>
+            </section>
+
+            <section id="panel-fun" class="tab-panel" tabindex="0" aria-labelledby="tab-fun">
+              <article class="card">
+                <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Fun Facts</h2>
+                <details class="inner"><summary style="cursor:pointer; font-weight:700;">Click to expand</summary>
+                  <!-- EDIT ME: Your facts -->
+                  <ul style="margin:8px 0 0 1rem; padding:0; list-style:square;">
+                    <li>I tinker with ThinkPads & Linux.</li>
+                    <li>Working on a flying bike concept (yes, really).</li>
+                    <li>I can break down Rawls vs. Mill for an exam and then fix your CSS.</li>
+                  </ul>
+                </details>
+              </article>
+            </section>
           </div>
         </section>
 
         <!-- RIGHT PANEL (Box 3b) -->
         <aside class="panel" aria-labelledby="about-title">
           <h2 id="about-title" style="margin:0 0 6px; font-size:20px; font-weight:900;">About This Page</h2>
-          <p style="margin:0 0 10px; color:var(--ink-2)">Minimal JS, strong CSS, lots of compartments. Perfect for quick edits.</p>
+          <p class="sub" style="margin:0 0 10px;">Minimal JS, strong CSS, lots of compartments. Perfect for quick edits.</p>
 
           <!-- STACK OF SMALL CARDS (Box 4b) -->
           <div class="cards" style="grid-template-columns:1fr;">
             <div class="card">
-              <strong>Layering</strong>
-              <div class="inner" style="margin-top:8px;">
-                <!-- EDIT ME: One‑liner explainer -->
-                Each layer is an independent box: <code>.frame → .panel → .card → .inner</code>.
-              </div>
+              <strong>Layers</strong>
+              <div class="inner" style="margin-top:8px;">Each layer is an independent box: <code>.frame → .panel → .card → .inner</code>.</div>
             </div>
             <div class="card">
               <strong>Performance</strong>
-              <div class="inner" style="margin-top:8px;">
-                No libraries. Just HTML/CSS/JS. Accessible focus rings + semantic tags.
-              </div>
+              <div class="inner" style="margin-top:8px;">No libraries. Just HTML/CSS/JS. Accessible focus rings + semantic tags.</div>
             </div>
             <div class="card">
               <strong>Customize Fast</strong>
-              <div class="inner" style="margin-top:8px;">
-                Tune design tokens in <code>:root</code> (colors, radii, shadows) for instant theming.
-              </div>
+              <div class="inner" style="margin-top:8px;">Tune design tokens in <code>:root</code> (colors, radii, shadows) for instant theming.</div>
             </div>
           </div>
         </aside>
       </div>
 
       <!-- FOOTER (Box 2b) -->
-      <p class="footer">© <span id="year"></span> Diego — Built with ❤️, CSS variables, and nested boxes.</p>
-    </div>
+      <footer class="footer">© <span id="year"></span> Diego — Built with ❤️, CSS variables, and nested boxes.</footer>
+    </main>
   </div>
+
+  <!-- CI/CD MODAL -->
+  <dialog class="modal" id="ciModal" aria-labelledby="ciTitle">
+    <div class="modal-card">
+      <h2 id="ciTitle" style="margin:4px 0 10px; font-size:20px; font-weight:900;">CI/CD (Quick Primer)</h2>
+      <div style="max-width:60ch; color:var(--ink-2)">
+        <p><strong>CI</strong> (Continuous Integration) automatically checks your code whenever you push (lint/validate/test).
+        <strong>CD</strong> (Continuous Delivery/Deployment) automatically ships the latest good build to your site (e.g., GitHub Pages).</p>
+        <p>For this class: set up a GitHub Action to <em>validate HTML</em> and then <em>deploy</em> to Pages if it passes. That’s CI → CD.</p>
+      </div>
+      <div class="buttons" style="margin-top:10px; justify-content:flex-end;">
+        <button class="btn" id="closeCi">Close</button>
+      </div>
+    </div>
+  </dialog>
 
   <script>
     // Tiny utility helpers
@@ -314,13 +294,18 @@
     // Live year
     $('#year').textContent = new Date().getFullYear();
 
-    // Theme Toggle (adds data-theme to <html>)
+    // Persisted Theme Toggle (JS enhancement #1)
+    const THEME_KEY = 'theme.pref';
+    const html = document.documentElement;
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved) html.setAttribute('data-theme', saved);
+
     const toggleBtn = $('#toggleTheme');
     toggleBtn?.addEventListener('click', () => {
-      const html = document.documentElement;
       const current = html.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : current === 'dark' ? null : 'dark';
+      const next = current === 'light' ? 'dark' : current === 'dark' ? '' : 'dark';
       if (next) html.setAttribute('data-theme', next); else html.removeAttribute('data-theme');
+      localStorage.setItem(THEME_KEY, next || '');
       toggleBtn.setAttribute('aria-pressed', String(next === 'dark'));
     });
 
@@ -328,10 +313,10 @@
     const randBtn = $('#randomize');
     function hsl(h, s = 90, l = 60) { return `hsl(${h} ${s}% ${l}%)`; }
     randBtn?.addEventListener('click', () => {
-      const root = document.documentElement;
       const h1 = Math.floor(Math.random() * 360);
       const h2 = (h1 + 90) % 360;
       const h3 = (h1 + 180) % 360;
+      const root = document.documentElement;
       root.style.setProperty('--accent-1', hsl(h1));
       root.style.setProperty('--accent-2', hsl(h2));
       root.style.setProperty('--accent-3', hsl(h3, 70, 56));
@@ -339,6 +324,50 @@
       $('#app').style.animation = 'ping .6s ease 1';
       setTimeout(() => $('#app').style.animation = '', 600);
     });
+
+    // Accessible Tabs (HTML+JS enhancement #2)
+    const tablist = $('#tabs [role="tablist"]');
+    const tabs = Array.from(tablist?.querySelectorAll('[role="tab"]') || []);
+    const panels = Array.from(document.querySelectorAll('.tab-panel'));
+
+    function activateTab(tab){
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+      panels.forEach(p => p.dataset.active = String(p.id === tab.getAttribute('aria-controls')));
+      const panel = document.getElementById(tab.getAttribute('aria-controls'));
+      panel?.focus();
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', () => activateTab(tab)));
+    tablist?.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      let ni = i;
+      if (e.key === 'ArrowRight') ni = (i + 1) % tabs.length;
+      if (e.key === 'ArrowLeft') ni = (i - 1 + tabs.length) % tabs.length;
+      if (ni !== i) { tabs[ni].focus(); activateTab(tabs[ni]); }
+    });
+
+    // Modal (JS enhancement #3)
+    const ciModal = $('#ciModal');
+    $('#openCiModal')?.addEventListener('click', () => ciModal.showModal());
+    $('#closeCi')?.addEventListener('click', () => ciModal.close());
+
+    // Avatar Lightbox (shares modal styling)
+    const avatar = $('#avatar');
+    avatar?.addEventListener('click', () => {
+      const m = document.createElement('dialog');
+      m.className = 'modal';
+      m.innerHTML = `<div class="modal-card"><img src="${avatar.src}" alt="Profile enlarged" style="border-radius:14px; max-width:80vw; height:auto; display:block"/><div class="buttons" style="justify-content:flex-end; margin-top:8px;"><button class="btn">Close</button></div></div>`;
+      document.body.appendChild(m);
+      m.showModal();
+      m.querySelector('button')?.addEventListener('click', ()=>{ m.close(); m.remove(); });
+    });
+
+    // Requirement: name changes to favorite color when clicked
+    const nameBtn = $('#nameBtn');
+    const nameSpan = $('#studentName');
+    const favoriteColor = 'tomato'; // EDIT ME: change to your favorite color keyword or hex
+    nameBtn?.addEventListener('click', () => { nameSpan.style.color = favoriteColor; });
   </script>
 </body>
 </html>
