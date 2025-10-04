@@ -117,9 +117,9 @@
     @media (max-width: 640px) { .cards { grid-template-columns: 1fr; } }
 
     .card {
-      position: relative; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 14px 16px 16px; transition: transform .25s ease, border-color .25s ease, background .25s ease;
+      position: relative; background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255,255,255,.01)); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 14px 16px 16px; transition: transform .25s ease, border-color .25s ease, background .25s ease;
     }
-    .card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.22); }
+    .card:hover { transform: translateY(-3px); border-color: rgba(246, 242, 242, 0.22); }
 
     /* Inner boxes (one more layer) */
     .inner { border-radius: 12px; background: var(--card); border: 1px dashed rgba(255,255,255,.15); padding: 12px; margin-top: 10px; }
@@ -131,7 +131,7 @@
 
     /* Buttons */
     .buttons { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .btn { appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px; padding: 10px 14px; border-radius: 12px; color: var(--ink-1); background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); border: 1px solid rgba(255,255,255,.12); transition: transform .15s ease, background .2s ease, border-color .2s ease; }
+    .btn { appearance: none; border: 0; cursor: pointer; font-weight: 700; letter-spacing: .2px; padding: 10px 14px; border-radius: 12px; color: var(--ink-1); background: linear-gradient(180deg, rgba(67, 67, 67, 0.375)), rgba(247, 247, 247, 0.02)); border: 1px solid rgba(255,255,255,.12); transition: transform .15s ease, background .2s ease, border-color .2s ease; }
     .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.25); }
     .btn[aria-pressed="true"] { outline: 3px solid var(--accent-2); }
 
@@ -141,8 +141,8 @@
 
     /* Tabs */
     .tabs [role="tablist"]{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
-    .tabs [role="tab"]{ padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,.15); background:rgba(255,255,255,.04); cursor:pointer; }
-    .tabs [role="tab"][aria-selected="true"]{ border-color: rgba(255,255,255,.35); background: rgba(255,255,255,.08); }
+    .tabs [role="tab"]{ padding:8px 12px; border-radius:10px; border:1px solid rgba(255, 255, 255, 0.266); background:rgba(245, 241, 241, 0.919); cursor:pointer; }
+    .tabs [role="tab"][aria-selected="true"]{ border-color: rgba(243, 237, 237, 0.735); background: rgba(255, 255, 255, 0.49); }
     .tab-panel{ display:none; }
     .tab-panel[data-active="true"]{ display:block; }
 
@@ -169,13 +169,14 @@
       <!-- TOP APP BAR -->
       <header class="appbar">
         <div class="title">
-          <span class="badge">GTKO</span>
-          <span>Getting to Know Each Other — Modular ✨</span>
+          <span class="badge">GTNEOE</span>
+          <span>Getting to Know Each Other — Enhanced</span>
         </div>
         <div class="buttons">
           <button class="btn" id="toggleTheme" aria-pressed="false" aria-label="Toggle theme">Toggle Theme</button>
           <button class="btn" id="randomize" aria-label="Randomize accents">Randomize Accents</button>
           <button class="btn" id="openCiModal" aria-label="What is CI/CD?">What is CI/CD?</button>
+          <button class="btn" id="toggleMusic" aria-pressed="false" aria-label="Play or pause background music">Play Music</button>
         </div>
       </header>
 
@@ -184,8 +185,7 @@
         <!-- LEFT PANEL (Box 3) -->
         <section class="panel" aria-labelledby="hero-title">
           <h1 class="hello" id="hero-title">Hello, World!</h1>
-          <p class="sub">This is Diego’s <strong>Getting to Know Each Other</strong> page with boxes‑within‑boxes, ready for CI/CD and validation.
-            Edit the <strong>EDIT ME</strong> spots to make it yours.
+          <p class="sub">Welcome to Diego’s <strong>Getting to Know Each Other: Enhanced Edition</strong>—a layered playground for CI/CD practice, creative storytelling, and collaborative tinkering.
           </p>
           <div class="rule" role="presentation"></div>
 
@@ -199,18 +199,18 @@
 
             <section id="panel-profile" class="tab-panel" data-active="true" tabindex="0" aria-labelledby="tab-profile">
               <article class="card">
-                <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap;">
+                <div style="display:flex; flex-direction:column; gap:14px; align-items:center; text-align:center;">
                   <!-- EDIT ME: Replace with your image -->
                   <img src="me-300-by-300.jpg" alt="Professional headshot of Diego Estrada in a suit and tie" width="120" height="120" style="border-radius:12px; border:1px solid rgba(255,255,255,.15); cursor: zoom-in; object-fit:cover;" id="avatar"/>
                   <div>
                     <h2 style="margin:0 0 6px; font-size:20px; font-weight:900;">Hi, I'm <button class="btn" id="nameBtn" style="padding:2px 8px; border-radius:8px;"> <span id="studentName">Diego Estrada</span> </button></h2>
-                    <p style="margin:0; color:var(--ink-2);">Cybersecurity @ Lewis University • Builder • Restaurant industry hustle • Tech & creative projects</p>
+                    <p style="margin:0; color:var(--ink-2);">Major:CyberEngineering Minor:Cybersecurity @ Lewis University • Welder • Restaurateur • Tech & creative projects</p>
                   </div>
                 </div>
                 <div class="inner" style="margin-top:10px;">
                   <!-- EDIT ME: Short bio -->
-                  I love shipping small projects fast. This page is my playground for HTML, CSS, and JavaScript.
-                </div>
+Hi, I’m Diego. I’ve taken a winding path—first pharmacy, then welding, and now I’m diving into computer engineering and cybersecurity.  
+This course is really helping me get in shape with coding and technology. I’m also learning guitar, and I enjoy experimenting, building, and exploring new skills.                 </div>
               </article>
             </section>
 
@@ -220,9 +220,7 @@
                 <div class="inner">
                   <!-- EDIT ME: Replace URLs with your own -->
                   <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
-                    <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
-                    <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
-                    <li><a href="#" aria-disabled="true">Project 1</a></li>
+                    <li><a href="https://github.com/daestrada911-dot/gtneoe" target="_blank" rel="noopener">GitHub</a></li>
                   </ul>
                 </div>
               </article>
@@ -231,12 +229,16 @@
             <section id="panel-fun" class="tab-panel" tabindex="0" aria-labelledby="tab-fun">
               <article class="card">
                 <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Fun Facts</h2>
-                <details class="inner"><summary style="cursor:pointer; font-weight:700;">Click to expand</summary>
+                <details class="inner"><summary style="cursor:pointer; font-weight:700;">Click Me!</summary>
                   <!-- EDIT ME: Your facts -->
                   <ul style="margin:8px 0 0 1rem; padding:0; list-style:square;">
-                    <li>I tinker with ThinkPads & Linux.</li>
+                    <li>I grew up working in my family’s restaurants, which taught me hustle, teamwork, and how to make a mean plate of pasta.</li>
+                    <li>I just picked up the guitar recently—still a beginner, but I’m learning it right alongside learning computer engineering.</li>
                     <li>Working on a flying bike concept (yes, really).</li>
-                    <li>I can break down Rawls vs. Mill for an exam and then fix your CSS.</li>
+                    <li>Right after high school, I went into pharmacy and even finished my Associate’s degree, but I realized it wasn’t for me.</li>
+                    <li>I went to welding school next—didn’t finish, but it taught me a lot about hands-on problem solving and working with tools.</li>
+                    <li>Now I’m focused on computer engineering and cybersecurity—finally finishing what I feel passionate about.</li>
+                    <li>Since high school, I’ve loved tinkering with and modding video game consoles. (Nothing beats making old hardware do new tricks!)</li>
                   </ul>
                 </details>
               </article>
@@ -246,31 +248,66 @@
 
         <!-- RIGHT PANEL (Box 3b) -->
         <aside class="panel" aria-labelledby="about-title">
-          <h2 id="about-title" style="margin:0 0 6px; font-size:20px; font-weight:900;">About This Page</h2>
-          <p class="sub" style="margin:0 0 10px;">Minimal JS, strong CSS, lots of compartments. Perfect for quick edits.</p>
+          <h2 id="about-title" style="margin:0 0 6px; font-size:20px; font-weight:900;">About This Page &amp; Course Integration</h2>
+          <p class="sub" style="margin:0 0 10px;">This page reflects both the technical skills we’re building and the requirements of the course. Here’s how it connects:</p>
 
           <!-- STACK OF SMALL CARDS (Box 4b) -->
           <div class="cards" style="grid-template-columns:1fr;">
             <div class="card">
-              <strong>Layers</strong>
-              <div class="inner" style="margin-top:8px;">Each layer is an independent box: <code>.frame → .panel → .card → .inner</code>.</div>
+              <strong>HTML so far</strong>
+              <div class="inner" style="margin-top:8px;">
+                We’ve built semantic structures: headings (<code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>), sections (<code>&lt;section&gt;</code>, <code>&lt;aside&gt;</code>), navigation buttons, and even a modal using <code>&lt;dialog&gt;</code>. These aren’t just for looks — they make our page accessible and organized.
+              </div>
             </div>
+
             <div class="card">
-              <strong>Performance</strong>
-              <div class="inner" style="margin-top:8px;">No libraries. Just HTML/CSS/JS. Accessible focus rings + semantic tags.</div>
+              <strong>CSS so far</strong>
+              <div class="inner" style="margin-top:8px;">
+                CSS variables (<code>:root</code>) act like course “design tokens.” We’ve added gradients, animations, and responsive grids. The glow around the frame shows off how CSS can create visual emphasis with very little code.
+              </div>
             </div>
+
             <div class="card">
-              <strong>Customize Fast</strong>
-              <div class="inner" style="margin-top:8px;">Tune design tokens in <code>:root</code> (colors, radii, shadows) for instant theming.</div>
+              <strong>JavaScript so far</strong>
+              <div class="inner" style="margin-top:8px;">
+                We’ve added interactivity: theme toggles with <code>localStorage</code>, tab navigation with keyboard support, and a modal that explains CI/CD. A small “fun fact” is how clicking on my name changes its color — proving that even a single line of JS can personalize a site.
+              </div>
+            </div>
+
+            <div class="card">
+              <strong>Course Requirements</strong>
+              <div class="inner" style="margin-top:8px;">
+                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
+                  <li>Implement 1 HTML enhancement (tabs, modal structure).</li>
+                  <li>Implement 1 CSS enhancement (design tokens, animated frame).</li>
+                  <li>Implement 2 JS enhancements (theme persistence, accessible tabs).</li>
+                  <li>Touch of JS: name changes to favorite color on click.</li>
+                  <li>Validate HTML using W3C validator &amp; test in Chrome/Firefox.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card">
+              <strong>Fun Facts</strong>
+              <div class="inner" style="margin-top:8px;">
+                <ul style="margin:0 0 0 1rem; padding:0; list-style:square;">
+                  <li><code>&lt;dialog&gt;</code> is a newer HTML element — not all courses teach it yet!</li>
+                  <li>The glowing border uses a <em>conic-gradient</em>, which spins in CSS without images.</li>
+                  <li>All animations run on the GPU, so they stay smooth even on slower laptops.</li>
+                  <li>Every style can be changed by editing the <code>:root</code> variables in one place.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </aside>
       </div>
 
       <!-- FOOTER (Box 2b) -->
-      <footer class="footer">© <span id="year"></span> Diego — Built with ❤️, CSS variables, and nested boxes.</footer>
+      <footer class="footer">© <span id="year"></span> Diego — Built with ❤️, Youtuber Pause,maybe?, Professors Pogue, and ChatGPT of course.</footer>
     </main>
   </div>
+
+  <audio id="bgAudio" src="background.mp3" loop preload="auto" hidden></audio>
 
   <!-- CI/CD MODAL -->
   <dialog class="modal" id="ciModal" aria-labelledby="ciTitle">
@@ -325,6 +362,41 @@
       setTimeout(() => $('#app').style.animation = '', 600);
     });
 
+    // Background music toggle
+    const musicBtn = $('#toggleMusic');
+    const bgAudio = $('#bgAudio');
+    if (bgAudio) bgAudio.volume = 0.35;
+    musicBtn?.addEventListener('click', async () => {
+      if (!bgAudio) return;
+      if (bgAudio.paused) {
+        try {
+          await bgAudio.play();
+          musicBtn.textContent = 'Pause Music';
+          musicBtn.setAttribute('aria-pressed', 'true');
+        } catch (err) {
+          console.error('Unable to start background audio', err);
+          musicBtn.textContent = 'Play Music';
+          musicBtn.setAttribute('aria-pressed', 'false');
+        }
+      } else {
+        bgAudio.pause();
+        musicBtn.textContent = 'Play Music';
+        musicBtn.setAttribute('aria-pressed', 'false');
+      }
+    });
+
+    bgAudio?.addEventListener('pause', () => {
+      if (!musicBtn) return;
+      musicBtn.textContent = 'Play Music';
+      musicBtn.setAttribute('aria-pressed', 'false');
+    });
+
+    bgAudio?.addEventListener('play', () => {
+      if (!musicBtn) return;
+      musicBtn.textContent = 'Pause Music';
+      musicBtn.setAttribute('aria-pressed', 'true');
+    });
+
     // Accessible Tabs (HTML+JS enhancement #2)
     const tablist = $('#tabs [role="tablist"]');
     const tabs = Array.from(tablist?.querySelectorAll('[role="tab"]') || []);
@@ -366,7 +438,7 @@
     // Requirement: name changes to favorite color when clicked
     const nameBtn = $('#nameBtn');
     const nameSpan = $('#studentName');
-    const favoriteColor = 'tomato'; // EDIT ME: change to your favorite color keyword or hex
+    const favoriteColor = '#4169e1'; // EDIT ME: change to your favorite color keyword or hex
     nameBtn?.addEventListener('click', () => { nameSpan.style.color = favoriteColor; });
   </script>
 </body>
