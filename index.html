@@ -170,6 +170,23 @@
     .tab-panel{ display:none; }
     .tab-panel[data-active="true"]{ display:block; }
 
+    /* === Tiny Game styles === */
+    .game-wrap { display:grid; gap:10px; justify-items:center; }
+    .game-ui  { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    #gameCanvas {
+      background: radial-gradient(800px 400px at 50% -10%, rgba(34,211,238,.12), transparent 60%),
+                  linear-gradient(180deg, var(--bg-3), var(--bg-2));
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 12px;
+      box-shadow: var(--shadow-1);
+      touch-action: none;
+    }
+    .badge-score {
+      font-weight:800; padding: 6px 10px; border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+      color:#06131a; letter-spacing:.3px;
+    }
+
     /* Modal */
     .modal { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 50; }
     .modal[open]{ display: grid; }
@@ -219,6 +236,7 @@
               <button role="tab" aria-selected="true" aria-controls="panel-profile" id="tab-profile">Profile</button>
               <button role="tab" aria-selected="false" aria-controls="panel-links" id="tab-links">Links</button>
               <button role="tab" aria-selected="false" aria-controls="panel-fun" id="tab-fun">Fun Facts</button>
+              <button role="tab" aria-selected="false" aria-controls="panel-game" id="tab-game">Game</button>
             </div>
 
             <div id="panel-profile" class="tab-panel" role="tabpanel" data-active="true" tabindex="0" aria-labelledby="tab-profile">
@@ -265,6 +283,23 @@ This course is really helping me get in shape with coding and technology. I’m 
                     <li>Since high school, I’ve loved tinkering with and modding video game consoles. (Nothing beats making old hardware do new tricks!)</li>
                   </ul>
                 </details>
+              </article>
+            </div>
+
+            <div id="panel-game" class="tab-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-game">
+              <article class="card">
+                <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Meteor Dodge</h2>
+                <div class="inner game-wrap">
+                  <canvas id="gameCanvas" width="360" height="480" aria-label="Meteor Dodge game area"></canvas>
+                  <div class="game-ui">
+                    <button class="btn" id="gameStart">Start / Restart</button>
+                    <span class="badge-score">Score: <span id="gameScore">0</span></span>
+                    <span class="sr-only" aria-live="polite" id="gameSr">Score 0</span>
+                    <small style="color:var(--ink-2)">
+                      drag left/right
+                    </small>
+                  </div>
+                </div>
               </article>
             </div>
           </div>
@@ -453,6 +488,184 @@ This course is really helping me get in shape with coding and technology. I’m 
       if (e.key === 'ArrowLeft') ni = (i - 1 + tabs.length) % tabs.length;
       if (ni !== i) { tabs[ni].focus(); activateTab(tabs[ni]); }
     });
+
+    /* =========================
+       Meteor Dodge — mini game
+       ========================= */
+    (() => {
+      const cvs = document.getElementById('gameCanvas');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      const startBtn = document.getElementById('gameStart');
+      const scoreEl  = document.getElementById('gameScore');
+      const srEl     = document.getElementById('gameSr');
+
+      const INK = getComputedStyle(document.documentElement).getPropertyValue('--ink-1') || '#fff';
+      const METEOR = getComputedStyle(document.documentElement).getPropertyValue('--accent-2') || '#a78bfa';
+      const PLAYER = getComputedStyle(document.documentElement).getPropertyValue('--accent-1') || '#22d3ee';
+
+      const W = cvs.width, H = cvs.height;
+      const state = {
+        running: false,
+        t0: 0,
+        t: 0,
+        dt: 0,
+        score: 0,
+        speed: 110,
+        player: { x: W/2, y: H - 40, r: 12, vx: 0 },
+        keys: { left:false, right:false },
+        touchX: null,
+        meteors: [],
+        nextSpawn: 0,
+        raf: 0
+      };
+
+      function reset() {
+        state.running = true;
+        state.t0 = performance.now();
+        state.t = 0;
+        state.dt = 0;
+        state.score = 0;
+        state.speed = 110;
+        state.player.x = W/2;
+        state.player.vx = 0;
+        state.meteors = [];
+        state.nextSpawn = 0;
+        scoreEl.textContent = '0';
+        srEl.textContent = 'Score 0';
+        loop();
+      }
+
+      function spawnMeteor() {
+        const r = 8 + Math.random()*10;
+        state.meteors.push({
+          x: r + Math.random()*(W - 2*r),
+          y: -r,
+          r,
+          vy: state.speed + Math.random()*80
+        });
+      }
+
+      function update(dt) {
+        const accel = 420;
+        const maxV  = 260;
+        if (state.keys.left)  state.player.vx = Math.max(state.player.vx - accel*dt, -maxV);
+        if (state.keys.right) state.player.vx = Math.min(state.player.vx + accel*dt,  maxV);
+        if (!state.keys.left && !state.keys.right) {
+          state.player.vx *= 0.86;
+          if (Math.abs(state.player.vx) < 8) state.player.vx = 0;
+        }
+        if (state.touchX != null) state.player.x += (state.touchX - state.player.x)*0.25;
+
+        state.player.x = Math.max(state.player.r, Math.min(W - state.player.r, state.player.x));
+
+        state.nextSpawn -= dt;
+        if (state.nextSpawn <= 0) {
+          spawnMeteor();
+          state.nextSpawn = Math.max(0.12, 0.55 - state.t*0.0009);
+        }
+
+        for (const m of state.meteors) m.y += m.vy*dt;
+
+        const before = state.meteors.length;
+        state.meteors = state.meteors.filter(m => m.y - m.r <= H + 2);
+        const cleared = before - state.meteors.length;
+        if (cleared > 0) {
+          state.score += cleared;
+          scoreEl.textContent = state.score;
+          srEl.textContent = `Score ${state.score}`;
+          state.speed += cleared * 1.2;
+        }
+
+        for (const m of state.meteors) {
+          const dx = m.x - state.player.x;
+          const dy = m.y - state.player.y;
+          const rr = (m.r + state.player.r) * (m.r + state.player.r);
+          if (dx*dx + dy*dy <= rr) {
+            gameOver();
+            break;
+          }
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+
+        ctx.beginPath();
+        ctx.fillStyle = PLAYER.trim();
+        ctx.arc(state.player.x, state.player.y, state.player.r, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = METEOR.trim();
+        for (const m of state.meteors) {
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, m.r, 0, Math.PI*2);
+          ctx.fill();
+        }
+
+        ctx.fillStyle = INK.trim();
+        ctx.font = 'bold 14px system-ui, -apple-system, Segoe UI, Roboto, Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText(`Score: ${state.score}`, 10, 20);
+      }
+
+      function loop(now = performance.now()) {
+        if (!state.running) return;
+        state.dt = Math.min(0.033, (now - (state.t0 + state.t)) / 1000);
+        state.t  = now - state.t0;
+        update(state.dt);
+        draw();
+        state.raf = requestAnimationFrame(loop);
+      }
+
+      function gameOver() {
+        state.running = false;
+        cancelAnimationFrame(state.raf);
+        ctx.fillStyle = 'rgba(0,0,0,.45)';
+        ctx.fillRect(0,0,W,H);
+        ctx.fillStyle = INK.trim();
+        ctx.font = '900 22px system-ui, -apple-system, Segoe UI, Roboto';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over', W/2, H/2 - 10);
+        ctx.font = '600 14px system-ui,-apple-system,Segoe UI,Roboto';
+        ctx.fillText('Press Start / Restart', W/2, H/2 + 16);
+        ctx.textAlign = 'left';
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a')  state.keys.left = true;
+        if (e.key === 'ArrowRight'|| e.key.toLowerCase() === 'd')  state.keys.right = true;
+      });
+      window.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'a')  state.keys.left = false;
+        if (e.key === 'ArrowRight'|| e.key.toLowerCase() === 'd')  state.keys.right = false;
+      });
+
+      const pointer = (ev) => {
+        const rect = cvs.getBoundingClientRect();
+        const clientX = ev.clientX ?? (ev.touches && ev.touches[0]?.clientX);
+        if (clientX == null) return;
+        const x = clientX - rect.left;
+        state.touchX = x * (cvs.width / rect.width);
+      };
+      cvs.addEventListener('pointerdown', pointer);
+      cvs.addEventListener('pointermove', (e) => { if (e.buttons) pointer(e); });
+      cvs.addEventListener('pointerup',   () => { state.touchX = null; });
+      cvs.addEventListener('pointerleave',() => { state.touchX = null; });
+      cvs.addEventListener('touchstart',  pointer, {passive:true});
+      cvs.addEventListener('touchmove',   pointer, {passive:true});
+      cvs.addEventListener('touchend',    () => { state.touchX = null; });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && state.running) {
+          cancelAnimationFrame(state.raf);
+        } else if (!document.hidden && state.running) {
+          loop();
+        }
+      });
+
+      startBtn?.addEventListener('click', reset);
+    })();
 
     // Modal (JS enhancement #3)
     const ciModal = $('#ciModal');
