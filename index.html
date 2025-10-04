@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Getting to Know Each Other — Diego</title>
-  <meta name="description" content="A playful, hyper‑modular Hello World / Getting to Know Each Other page with CI/CD-ready structure, nested boxes, and interactive JS." />
+  <meta name="description" content="A playful, hyper‑modular Hello World / Getting to Know Each Other page with CI/CD-ready structure, nested boxes, and interactive JS.">
   <style>
     /* ========================
        THEME & DESIGN TOKENS
@@ -85,6 +85,17 @@
 
     a { color: var(--accent-1); text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     :focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 6px; }
 
     /* Centered stage */
@@ -210,11 +221,11 @@
               <button role="tab" aria-selected="false" aria-controls="panel-fun" id="tab-fun">Fun Facts</button>
             </div>
 
-            <section id="panel-profile" class="tab-panel" data-active="true" tabindex="0" aria-labelledby="tab-profile">
+            <div id="panel-profile" class="tab-panel" role="tabpanel" data-active="true" tabindex="0" aria-labelledby="tab-profile">
               <article class="card">
                 <div style="display:flex; flex-direction:column; gap:14px; align-items:center; text-align:center;">
                   <!-- EDIT ME: Replace with your image -->
-                  <img src="me-300-by-300.jpg" alt="Professional headshot of Diego Estrada in a suit and tie" width="120" height="120" style="border-radius:12px; border:1px solid rgba(255,255,255,.15); cursor: zoom-in; object-fit:cover;" id="avatar"/>
+                  <img src="me-300-by-300.jpg" alt="Professional headshot of Diego Estrada in a suit and tie" width="120" height="120" style="border-radius:12px; border:1px solid rgba(255,255,255,.15); cursor: zoom-in; object-fit:cover;" id="avatar">
                   <div>
                     <h2 style="margin:0 0 6px; font-size:20px; font-weight:900;">Hi, I'm <button class="btn" id="nameBtn" style="padding:2px 8px; border-radius:8px;"> <span id="studentName">Diego Estrada</span> </button></h2>
                     <p style="margin:0; color:var(--ink-2);">Major:CyberEngineering Minor:Cybersecurity @ Lewis University • Welder • Restaurateur • Tech & creative projects</p>
@@ -225,9 +236,9 @@
 Hi, I’m Diego. I’ve taken a winding path—first pharmacy, then welding, and now I’m diving into computer engineering and cybersecurity.  
 This course is really helping me get in shape with coding and technology. I’m also learning guitar, and I enjoy experimenting, building, and exploring new skills.                 </div>
               </article>
-            </section>
+            </div>
 
-            <section id="panel-links" class="tab-panel" tabindex="0" aria-labelledby="tab-links">
+            <div id="panel-links" class="tab-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-links">
               <article class="card">
                 <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Quick Links</h2>
                 <div class="inner">
@@ -237,9 +248,9 @@ This course is really helping me get in shape with coding and technology. I’m 
                   </ul>
                 </div>
               </article>
-            </section>
+            </div>
 
-            <section id="panel-fun" class="tab-panel" tabindex="0" aria-labelledby="tab-fun">
+            <div id="panel-fun" class="tab-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-fun">
               <article class="card">
                 <h2 style="margin:0 0 6px; font-size:18px; font-weight:800;">Fun Facts</h2>
                 <details class="inner"><summary style="cursor:pointer; font-weight:700;">Click Me!</summary>
@@ -255,7 +266,7 @@ This course is really helping me get in shape with coding and technology. I’m 
                   </ul>
                 </details>
               </article>
-            </section>
+            </div>
           </div>
         </section>
 
